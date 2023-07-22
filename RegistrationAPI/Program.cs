@@ -6,9 +6,13 @@ using RegistrationAPI.Data;
 using RegistrationAPI.Services.CharacterService;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContext<RegistrationAPIContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("RegistrationAPIContext") ?? throw new InvalidOperationException("Connection string 'RegistrationAPIContext' not found.")));
+
 builder.Services.AddScoped<ICharacterService, CharacterService>();
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 builder.Services.AddSwaggerGen();
 
@@ -16,7 +20,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-var app = builder.Build();
+var app = builder.Build();  
 
 
 app.UseRouting();
@@ -31,12 +35,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
 app.UseEndpoints(endpoints =>
     endpoints.MapControllers());
-
-
-
-//app.MapGet("/", () => "Hello World!");
 
 app.Run();
