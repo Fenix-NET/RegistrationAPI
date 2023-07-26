@@ -1,6 +1,6 @@
 ﻿namespace RegistrationAPI.Models
 {
-    public class ServiceResponse<T>
+    public class ServiceResponse<T>     //Wrapper object
     {
         public T Data { get; set; }
 
